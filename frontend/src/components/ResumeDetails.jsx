@@ -80,33 +80,22 @@ const ResumeDetails = ({ resumeData }) => {
             >
               <h4 className="font-medium text-blue-600">{exp.title}</h4>
               <p className="text-gray-700 font-medium">{exp.company}</p>
-              <p className="text-sm text-gray-500">{exp.duration}</p>
-              <div className="mt-3">
-                <p className="text-sm font-medium text-gray-600 mb-2">
-                  Key Responsibilities:
-                </p>
-                <ul className="list-disc list-inside space-y-1">
-                  {exp.responsibilities.map((resp, idx) => (
-                    <li key={idx} className="text-sm text-gray-600">
-                      {resp}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {exp.achievements && (
+              <p className="text-sm text-gray-500">{exp.duration}</p>{" "}
+              {exp.description && exp.description.length > 0 && (
                 <div className="mt-3">
                   <p className="text-sm font-medium text-gray-600 mb-2">
-                    Notable Achievements:
+                    Description:
                   </p>
                   <ul className="list-disc list-inside space-y-1">
-                    {exp.achievements.map((achievement, idx) => (
-                      <li key={idx} className="text-sm text-blue-600">
-                        {achievement}
+                    {exp.description.map((desc, idx) => (
+                      <li key={idx} className="text-sm text-gray-600">
+                        {desc}
                       </li>
                     ))}
                   </ul>
                 </div>
-              )}
+              )}{" "}
+              {/* Achievements section removed as it's not in the backend schema */}
             </div>
           ))}
         </div>
@@ -148,12 +137,19 @@ const ResumeDetails = ({ resumeData }) => {
               key={index}
               className="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-200"
             >
+              {" "}
               <h4 className="font-medium text-blue-600">{edu.degree}</h4>
               <p className="text-gray-700">{edu.institution}</p>
-              <p className="text-sm text-gray-500">{edu.duration}</p>
-              {edu.achievements && (
+              <p className="text-sm text-gray-500">{edu.year}</p>
+              {edu.details && edu.details.length > 0 && (
                 <div className="mt-2">
-                  <p className="text-sm text-gray-600">{edu.achievements}</p>
+                  <ul className="list-disc list-inside space-y-1">
+                    {edu.details.map((detail, idx) => (
+                      <li key={idx} className="text-sm text-gray-600">
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>

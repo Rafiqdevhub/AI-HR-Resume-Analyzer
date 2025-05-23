@@ -14,16 +14,17 @@ const App = () => {
     try {
       // Create form data
       const formData = new FormData();
-      formData.append("resume", file);
+      formData.append("file", file); // Match the backend parameter name
 
-      // TODO: Replace with your actual API endpoint
+      // Send to backend API endpoint
       const response = await fetch("http://localhost:8000/api/analyze-resume", {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("Failed to analyze resume");
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Failed to analyze resume");
       }
 
       const data = await response.json();
@@ -31,7 +32,7 @@ const App = () => {
       setQuestions(data.questions);
     } catch (error) {
       console.error("Error analyzing resume:", error);
-      // TODO: Add proper error handling
+      alert(error.message);
     } finally {
       setIsLoading(false);
     }
