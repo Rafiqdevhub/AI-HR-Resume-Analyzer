@@ -12,7 +12,25 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
 .env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Editor directories and files
 .vscode/*
