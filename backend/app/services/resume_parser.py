@@ -3,11 +3,11 @@ import docx
 import pdfplumber
 from fastapi import UploadFile, HTTPException
 import re
-from typing import Dict, List, Any, Optional
+from typing import Dict, Any
 import json
 from io import BytesIO
 import google.generativeai as genai
-import asyncio
+
 
 class ResumeParser:
     async def parse(self, file: UploadFile) -> Dict[str, Any]:

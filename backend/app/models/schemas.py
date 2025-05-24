@@ -8,15 +8,15 @@ class PersonalInfo(BaseModel):
     location: Optional[str] = None
 
 class Experience(BaseModel):
-    title: str
-    company: str
-    duration: str
-    description: List[str]
+    title: Optional[str] = None
+    company: Optional[str] = None
+    duration: Optional[str] = None
+    description: Optional[List[str]] = []
 
 class Education(BaseModel):
-    degree: str
-    institution: str
-    year: str
+    degree: Optional[str] = None
+    institution: Optional[str] = None
+    year: Optional[str] = None
     details: Optional[List[str]] = None
 
 class ResumeData(BaseModel):
