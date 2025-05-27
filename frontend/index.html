@@ -40,19 +40,58 @@
     <meta property="twitter:image" content="/logo.svg" />
 
     <!-- Additional SEO Meta Tags -->
-    <meta name="robots" content="index, follow" />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
     <meta name="author" content="JobPsych" />
     <meta
       name="keywords"
-      content="career psychology, job guidance, professional development, career counseling, career assessment"
+      content="resume analysis, career psychology, job guidance, professional development, career counseling, career assessment, AI career assistant, interview preparation, job search help, resume analyzer, career guidance tool, professional interview questions, HR assistant, career development, job application helper"
     />
+    <meta name="application-name" content="JobPsych" />
+    <meta name="apple-mobile-web-app-title" content="JobPsych" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
     <!-- Performance & Security -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
     <link rel="canonical" href="https://jobpsych.com/" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "JobPsych",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "JobPsych helps you understand your career path through psychological insights and professional guidance. Features AI-powered resume analysis and interview question generation.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "AI-powered resume analysis",
+          "Personalized interview questions",
+          "Career path guidance",
+          "Professional development insights"
+        ]
+      }
+    </script>
+
+    <!-- Preconnect to essential domains -->
+    <link rel="preconnect" href="https://jobpsych.com" />
+    <link rel="dns-prefetch" href="https://jobpsych.com" />
   </head>
   <body>
+    <noscript>You need to enable JavaScript to run this application.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

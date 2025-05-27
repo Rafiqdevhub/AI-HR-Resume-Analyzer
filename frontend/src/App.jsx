@@ -3,20 +3,71 @@ import React, { useState } from "react";
 import ResumeUpload from "./components/ResumeUpload";
 import ResumeDetails from "./components/ResumeDetails";
 import GeneratedQuestions from "./components/GeneratedQuestions";
+import Toast from "./components/Toast";
+import { formatErrorMessage, getErrorType } from "./utils/errorHandler";
 
 const App = () => {
   const [resumeData, setResumeData] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({
+    show: false,
+    message: "",
+    type: "error",
+  });
 
   const handleFileUpload = async (file) => {
     setIsLoading(true);
-    try {
-      // Create form data
-      const formData = new FormData();
-      formData.append("file", file); // Match the backend parameter name
+    setError({ show: false, message: "", type: "error" });
 
-      // Send to backend API endpoint
+    // Validate file size
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    if (file.size > MAX_FILE_SIZE) {
+      setError({
+        show: true,
+        message:
+          "The file is too large (max 5MB). Please upload a smaller file or compress the current one.",
+        type: "warning",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate file type
+    const allowedTypes = [
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/msword",
+      "application/octet-stream",
+      "application/x-msword",
+      "application/vnd.ms-word",
+      "", // Empty string for when browser doesn't provide MIME type
+    ];
+
+    // Also validate file extension
+    const allowedExtensions = [".pdf", ".doc", ".docx"];
+    const fileExtension = file.name
+      .toLowerCase()
+      .substring(file.name.lastIndexOf("."));
+    const isValidExtension = allowedExtensions.includes(fileExtension);
+
+    console.log("File type:", file.type, "File extension:", fileExtension);
+
+    // Check both MIME type and file extension
+    if (!allowedTypes.includes(file.type) && !isValidExtension) {
+      setError({
+        show: true,
+        message: "Please upload a PDF or Word document (DOC/DOCX).",
+        type: "warning",
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
       const response = await fetch("http://localhost:8000/api/analyze-resume", {
         method: "POST",
         body: formData,
@@ -30,9 +81,22 @@ const App = () => {
       const data = await response.json();
       setResumeData(data.resumeData);
       setQuestions(data.questions);
+
+      setError({
+        show: true,
+        message:
+          "Resume successfully analyzed! Scroll down to view the results.",
+        type: "success",
+      });
     } catch (error) {
       console.error("Error analyzing resume:", error);
-      alert(error.message);
+      const errorMessage = formatErrorMessage(error.message);
+      const errorType = getErrorType(error.message);
+      setError({
+        show: true,
+        message: errorMessage,
+        type: errorType,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -40,6 +104,13 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      <Toast
+        show={error.show}
+        message={error.message}
+        type={error.type}
+        onClose={() => setError({ show: false, message: "", type: "error" })}
+      />
+
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] animate-[wave_10s_linear_infinite] motion-safe:transform-none"></div>
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-full bg-gradient-to-r from-blue-50 via-blue-50/70 to-sky-50/50 opacity-40 blur-[106px] animate-pulse"></div>

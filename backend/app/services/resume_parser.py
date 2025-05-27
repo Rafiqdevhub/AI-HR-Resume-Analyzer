@@ -43,17 +43,30 @@ class ResumeParser:
                     except Exception as pdf_e:
                         raise HTTPException(
                             status_code=400,
-                            detail=f"Failed to read PDF file: {str(e)}. pdfplumber error: {str(pdf_e)}"
-                        )
+                            detail=f"Failed to read PDF file: {str(e)}. pdfplumber error: {str(pdf_e)}"                        )
             
             elif filename.endswith(('.doc', '.docx')):
                 try:
+                    file_bytes.seek(0)  # Reset file pointer
                     doc = docx.Document(file_bytes)
-                    text = " ".join(paragraph.text for paragraph in doc.paragraphs)
+                    paragraphs = [paragraph.text for paragraph in doc.paragraphs if paragraph.text.strip()]
+                    if not paragraphs:
+                        # If no paragraphs found, try to extract from tables as well
+                        for table in doc.tables:
+                            for row in table.rows:
+                                paragraphs.extend(cell.text.strip() for cell in row.cells if cell.text.strip())
+                    
+                    text = " ".join(paragraphs)
+                    
+                    if not text.strip():
+                        raise HTTPException(
+                            status_code=400,
+                            detail="No readable text found in the Word document. Please check if the document contains text content."
+                        )
                 except Exception as e:
                     raise HTTPException(
                         status_code=400,
-                        detail=f"Failed to read DOCX file: {str(e)}"
+                        detail=f"Failed to read Word document: {str(e)}. Please ensure the document is not corrupted and is a valid .doc or .docx file."
                     )
             
             else:
