@@ -116,13 +116,14 @@ const App = () => {
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-full bg-gradient-to-r from-blue-50 via-blue-50/70 to-sky-50/50 opacity-40 blur-[106px] animate-pulse"></div>
       </div>
 
-      <header className="bg-white/70 backdrop-blur-sm shadow-sm sticky top-0 z-10">
+      <header className="bg-white/70 backdrop-blur-sm shadow-lg sticky top-0 z-10 transition-all duration-300">
         <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between bg-white/50 rounded-2xl border border-blue-100/20 shadow-lg shadow-blue-100/20 backdrop-blur-md px-6 py-3">
+          <div className="flex items-center justify-between bg-gradient-to-r from-white/80 via-blue-50/50 to-indigo-50/30 rounded-2xl border border-blue-100/30 shadow-xl shadow-blue-100/20 backdrop-blur-md px-8 py-4 hover:shadow-2xl hover:border-blue-200/40 transition-all duration-500">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center group">
+              <div className="flex items-center group relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-500"></div>
                 <svg
-                  className="h-10 w-10 text-blue-600 transform group-hover:scale-110 transition-transform duration-300"
+                  className="h-12 w-12 text-blue-600 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -134,19 +135,20 @@ const App = () => {
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
-                <h1 className="ml-3 text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent hover:from-blue-700 hover:to-indigo-700 transition-all duration-300">
+                <h1 className="ml-3 text-3xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent hover:from-blue-700 hover:to-indigo-700 transition-all duration-500 group-hover:scale-105">
                   HR Resume Assistant
                 </h1>
               </div>
             </div>
             <div className="flex items-center space-x-6">
-              <div className="hidden md:flex flex-col items-end">
-                <p className="text-sm font-medium text-gray-600">
+              <div className="hidden md:flex flex-col items-end group">
+                <p className="text-sm font-semibold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent transition-all duration-300 group-hover:from-blue-600 group-hover:to-indigo-600">
                   Smart Candidate Evaluation
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-500 group-hover:text-blue-500 transition-colors duration-300">
                   AI-Powered Interview Preparation
                 </p>
+                <div className="h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-500"></div>
               </div>
             </div>
           </div>
