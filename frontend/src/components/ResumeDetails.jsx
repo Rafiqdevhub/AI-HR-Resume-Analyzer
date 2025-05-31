@@ -94,8 +94,7 @@ const ResumeDetails = ({ resumeData }) => {
                     ))}
                   </ul>
                 </div>
-              )}{" "}
-              {/* Achievements section removed as it's not in the backend schema */}
+              )}
             </div>
           ))}
         </div>
